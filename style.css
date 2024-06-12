@@ -52,6 +52,7 @@ body{
 .mainGrid{
 display: grid;
 grid-template-columns: 1fr 1fr 1fr;
+grid-template-rows: 1fr 1fr 1fr;
 width: 400px;
 height: 400px;
 }
@@ -59,4 +60,17 @@ height: 400px;
 
 .grid{
     border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.newDiv{
+    scale: 4;
+}
+
+.inputDiv{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
 }
