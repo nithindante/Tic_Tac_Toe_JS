@@ -108,9 +108,7 @@ function Game()
     }
 
     checkWin = function(){ 
-        console.log(board.arr[0])
-        console.log(board.arr[1])
-        console.log(board.arr[2])
+ 
         if ((board.arr[0].toString() ===board.arr[1].toString()) && (board.arr[1].toString() ===board.arr[2].toString()) && (board.arr[1].length>0))
             {
                 
@@ -196,7 +194,6 @@ function placeMarker(childGrids,assignMarker) {
             }
             if (game.checkDraw()) {
                 resultDiv(Player1,'Draw')
-                console.log('Draw')
                                 return
             }
         }
