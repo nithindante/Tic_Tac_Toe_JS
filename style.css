@@ -70,9 +70,11 @@ height: 400px;
 }
 
 .inputDiv{
+    padding: 1rem;
     position: absolute;
     display: flex;
     flex-direction: column;
+    border: 0.5px solid;
 }
 
 
@@ -86,6 +88,13 @@ height: 400px;
 
 .resultDiv{
     border: 1px solid;
-    height: 100px;
-    width: 100px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.submitButton{
+    margin-top: 1rem;
+
 }
