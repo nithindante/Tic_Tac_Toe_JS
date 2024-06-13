@@ -3,9 +3,6 @@ function Players(name,marker) {
     this.marker=marker;
 }
 
-Player1 = new Players('Nithin','X')
-Player2 = new Players('Rahul','O')
-
 
 let firstForm = (function () {
     let mainForm = document.createElement('form')
@@ -16,12 +13,14 @@ let firstForm = (function () {
     let firstInput = document.createElement('input')
     firstInput.setAttribute('type','text')
     firstInput.setAttribute('id','Player1')
+    firstInput.required = true;
     let secondLabel = document.createElement('label')   
     secondLabel.setAttribute('for','Player2')
     secondLabel.innerHTML = "Second player's name";
     let secondInput = document.createElement('input')
     secondInput.setAttribute('type','text');
     secondInput.setAttribute('id','Player2');
+    secondInput.required = true;
     let button = document.createElement('input');
     button.setAttribute('type','submit');
     button.classList.add('submitButton')
@@ -31,6 +30,17 @@ let firstForm = (function () {
     mainForm.appendChild(secondLabel)
     mainForm.appendChild(secondInput)
     mainForm.appendChild(button)
+    mainForm.addEventListener('submit',function () {
+        mainForm.classList.add('mainFormAnimated')
+        
+        Player1 = new Players(firstInput.value,'O')
+        Player2 = new Players(secondInput.value,'X')
+        displayController.createBoard()
+        placeMarker(childGrids,assignMarker)
+        mainForm.reset();
+        event.preventDefault();
+    })
+    
 })();
 
 let board = (function () {
@@ -97,7 +107,10 @@ function Game()
         }
     }
 
-    checkWin = function(){  
+    checkWin = function(){ 
+        console.log(board.arr[0])
+        console.log(board.arr[1])
+        console.log(board.arr[2])
         if ((board.arr[0].toString() ===board.arr[1].toString()) && (board.arr[1].toString() ===board.arr[2].toString()) && (board.arr[1].length>0))
             {
                 
@@ -154,8 +167,6 @@ function Game()
 
 
 let game = new Game()
-displayController.createBoard()
-
 let mainGrid =document.querySelector('.mainGrid')
 let childGrids = mainGrid.children;
 let assignMarker = 0 
@@ -169,7 +180,7 @@ function placeMarker(childGrids,assignMarker) {
                 displayController.placeBoard(i,'O');
                 if(game.checkWin())
                     {   
-                        console.log('player 1 won')
+                        resultDiv(Player1,'Won')
                         return
                     }
                 assignMarker = 1;
@@ -178,23 +189,50 @@ function placeMarker(childGrids,assignMarker) {
                 displayController.placeBoard(i,'X'); 
                 if(game.checkWin())
                     {   
-                        console.log('player 2 won')
+                        resultDiv(Player2,'Won')
                         return
                     }
                 assignMarker = 0;
             }
             if (game.checkDraw()) {
+                resultDiv(Player1,'Draw')
                 console.log('Draw')
                                 return
             }
         }
         } )
-
     }
 }
-placeMarker(childGrids,assignMarker)
 
-let submitButton = document.querySelector('.submitButton');
-submitButton.addEventListener(click(),function () {
-    submitButton.style.display = none;  
+
+let resultDiv = function (player,status) {
+let mainForm = document.querySelector('.inputDiv')
+let childDivs = document.querySelectorAll('.grid')
+let resultDiv = document.createElement('div')
+resultDiv.classList.add('resultDiv')
+document.body.appendChild(resultDiv)
+mainGrid.classList.add('afterResult')
+
+let resetButton = document.createElement('button')
+
+if(status =='Won'){
+resultDiv.innerHTML = `${player.name.toString()} has ${status}`
+}
+else{
+    resultDiv.innerHTML = " Its a Draw"
+}
+resetButton.innerHTML='Restart'
+
+
+
+resultDiv.appendChild(resetButton)
+resetButton.addEventListener('click',function () {
+     document.body.removeChild(resultDiv)
+     mainForm.classList.toggle('mainFormAnimated')
+     mainGrid.classList.toggle('afterResult')
+     for (let i = 0; i < 9; i++) {
+        board.arr[i]=[];
+       mainGrid.removeChild(childDivs[i])
+    }
 })
+};

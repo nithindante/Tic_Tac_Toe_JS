@@ -74,3 +74,18 @@ height: 400px;
     display: flex;
     flex-direction: column;
 }
+
+
+.mainFormAnimated{
+    display: none;
+}
+
+.afterResult{
+    display: none;
+}
+
+.resultDiv{
+    border: 1px solid;
+    height: 100px;
+    width: 100px;
+}
